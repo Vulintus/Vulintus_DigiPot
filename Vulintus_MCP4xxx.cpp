@@ -1,22 +1,26 @@
 /* 
-    Vulintus_MC41xx.cpp
+    Vulintus_MCP4xxx.cpp
 
     Copyright 2023, Vulintus, Inc.
-     
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
+    
+    Arduino-compatible library for the Microchip MCP413X/415X/423X/425X series 
+    single/dual digital potentiometers/rheostats using the SPI interface.
+
+    Licensed under the Apache License, Version 2.0 (the "License"); you may not 
+    use this file except in compliance with the License.
+
     You may obtain a copy of the License at
 
     http://www.apache.org/licenses/LICENSE-2.0
 
     Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
+    distributed under the License is distributed on an "AS IS" BASIS, WITHOUT 
+    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+    License for the specific language governing permissions and limitations 
+    under the License.
 
     UPDATE LOG:
-      2023-08-22 - Drew Sloan - Library first created.
+        2023-08-22 - Drew Sloan - Library first created.
 */
 
 
