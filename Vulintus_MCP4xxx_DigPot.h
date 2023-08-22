@@ -1,5 +1,5 @@
 /* 
-    Vulintus_MCP4xxx.h
+    Vulintus_MCP4xxx_DigPot.h
 
     Copyright 2023, Vulintus, Inc.
     
