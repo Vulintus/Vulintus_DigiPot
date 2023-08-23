@@ -24,8 +24,8 @@
 */
 
 
-#ifndef VULINTUS_MCP41XX_H
-#define VULINTUS_MCP41XX_H
+#ifndef VULINTUS_MCP4XXX_H
+#define VULINTUS_MCP4XXX_H
 
 
 //Included libraries.//
@@ -35,18 +35,18 @@
 
 
 // CLASS *************************************************************************************************************// 
-class Vulintus_MPC41xx {
+class Vulintus_MCP4xxx_DigPot {
 
 	public:
 
 		// Constructor. //
-		Vulintus_MPC41xx(uint8_t pin_cs);
+		Vulintus_MCP4xxx_DigPot(uint8_t pin_cs);
 
         // Functions. //
         uint16_t read();                                //Read the Wiper 0 value.
         uint16_t read(uint8_t wiper_i);                 //Read the specified wiper value.
         void write(uint16_t value);                     //Write the Wiper 0 value.
-        void write(uint16_t value, uint8_t wiper_i);    //Write the specified wiper value.
+        void write(uint16_t value, uint8_t wiper_i);    //Write the specified wiper value.MCP4XXX
         void increment();                               //Increment Wiper 0.
         void increment(uint8_t wiper_i);                //Increment the specified wiper.
         void decrement();                               //Increment Wiper 1.
@@ -55,28 +55,29 @@ class Vulintus_MPC41xx {
     private:
 
         // Constants. //
-        static const uint8_t MCP41XX_REG_WIPER[] = {0x00, 0x10};    //Volatile Wiper 0, 1.
-        static const uint8_t MCP41XX_REG_TCON    = 0x40;            //Volatile TCON Register.
-        static const uint8_t MCP41XX_REG_STATUS  = 0x50;            //Status Register.
+        static const uint8_t MCP4XXX_REG_WIPER0  = 0x00;            //Volatile Wiper 0.
+        static const uint8_t MCP4XXX_REG_WIPER1  = 0x10;            //Volatile Wiper 1.
+        static const uint8_t MCP4XXX_REG_TCON    = 0x40;            //Volatile TCON Register.
+        static const uint8_t MCP4XXX_REG_STATUS  = 0x50;            //Status Register.
 
-        static const uint8_t MCP41XX_STATUS_SHDN = 0x02;            //Hardware Shutdown pin Status bit.
+        static const uint8_t MCP4XXX_STATUS_SHDN = 0x02;            //Hardware Shutdown pin Status bit.
 
-        static const uint8_t MCP41XX_TCON_R0HW   = 0x08;            //Resistor 0 Hardware Configuration Control bit.
-        static const uint8_t MCP41XX_TCON_R0A    = 0x04;            //Resistor 0 Terminal A (P0A pin) Connect Control bit .
-        static const uint8_t MCP41XX_TCON_R0W    = 0x02;            //Resistor 0 Wiper (P0W pin) Connect Control bit.
-        static const uint8_t MCP41XX_TCON_R0B    = 0x01;            //Resistor 0 Terminal B (P0B pin) Connect Control bit.
-        static const uint8_t MCP41XX_TCON_R1HW   = 0x80;            //Resistor 1 Hardware Configuration Control bit.
-        static const uint8_t MCP41XX_TCON_R1A    = 0x40;            //Resistor 1 Terminal A (P1A pin) Connect Control bit .
-        static const uint8_t MCP41XX_TCON_R1W    = 0x20;            //Resistor 1 Wiper (P1W pin) Connect Control bit.
-        static const uint8_t MCP41XX_TCON_R1B    = 0x10;            //Resistor 1 Terminal B (P1B pin) Connect Control bit.
+        static const uint8_t MCP4XXX_TCON_R0HW   = 0x08;            //Resistor 0 Hardware Configuration Control bit.
+        static const uint8_t MCP4XXX_TCON_R0A    = 0x04;            //Resistor 0 Terminal A (P0A pin) Connect Control bit .
+        static const uint8_t MCP4XXX_TCON_R0W    = 0x02;            //Resistor 0 Wiper (P0W pin) Connect Control bit.
+        static const uint8_t MCP4XXX_TCON_R0B    = 0x01;            //Resistor 0 Terminal B (P0B pin) Connect Control bit.
+        static const uint8_t MCP4XXX_TCON_R1HW   = 0x80;            //Resistor 1 Hardware Configuration Control bit.
+        static const uint8_t MCP4XXX_TCON_R1A    = 0x40;            //Resistor 1 Terminal A (P1A pin) Connect Control bit .
+        static const uint8_t MCP4XXX_TCON_R1W    = 0x20;            //Resistor 1 Wiper (P1W pin) Connect Control bit.
+        static const uint8_t MCP4XXX_TCON_R1B    = 0x10;            //Resistor 1 Terminal B (P1B pin) Connect Control bit.
 
-        static const uint8_t MCP41XX_CMD_WRITE   = 0x00;            //Write data command.
-        static const uint8_t MCP41XX_CMD_READ    = 0x0C;            //Read data command.
-        static const uint8_t MCP41XX_CMD_INCR    = 0x04;            //Increment command.
-        static const uint8_t MCP41XX_CMD_DECR    = 0x08;            //Decrement command.
+        static const uint8_t MCP4XXX_CMD_WRITE   = 0x00;            //Write data command.
+        static const uint8_t MCP4XXX_CMD_READ    = 0x0C;            //Read data command.
+        static const uint8_t MCP4XXX_CMD_INCR    = 0x04;            //Increment command.
+        static const uint8_t MCP4XXX_CMD_DECR    = 0x08;            //Decrement command.
 
         // Variables. //
-        uint8_t _pin_cs;                //Chip select pin.
+        const uint8_t _pin_cs;                                      //Chip select pin.
 
         // Private Functions. //
         uint16_t send_cmd(uint8_t addr, uint8_t cmd, uint16_t data);     //Send a command with data.
@@ -84,4 +85,4 @@ class Vulintus_MPC41xx {
 
 };
 
-#endif      // #ifndef VULINTUS_MCP41XX_H
+#endif      // #ifndef VULINTUS_MCP4XXX_H
