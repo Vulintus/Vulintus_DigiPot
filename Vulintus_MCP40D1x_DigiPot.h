@@ -1,5 +1,5 @@
 /* 
-    Vulintus_MCP40D1x_DigPot.h
+    Vulintus_MCP40D1x_DigiPot.h
 
     Copyright 2023, Vulintus, Inc.
     
@@ -35,13 +35,13 @@
 
 
 // CLASS *************************************************************************************************************// 
-class Vulintus_MCP40D1x_DigPot {
+class Vulintus_MCP40D1x_DigiPot {
 
 	public:
 
 		// Constructor. //
-		Vulintus_MCP40D1x_DigPot(uint8_t pin_cs);                        // Default SPI with chip select.
-        Vulintus_MCP40D1x_DigPot(SPIClass *spi_bus, uint8_t pin_cs);     // Specified SPI with chip select.
+		Vulintus_MCP40D1x_DigiPot(uint8_t pin_cs);                        // Default SPI with chip select.
+        Vulintus_MCP40D1x_DigiPot(SPIClass *spi_bus, uint8_t pin_cs);     // Specified SPI with chip select.
 
         // Functions. //
         void begin(void); 							    //Initialization.

@@ -1,5 +1,5 @@
 /*
-    Vulintus_MCP4xxx_DigPot.cpp
+    Vulintus_MCP4xxx_DigiPot.cpp
 
     Copyright 2023, Vulintus, Inc.
     
@@ -24,13 +24,13 @@
 */
 
 
-#include <Vulintus_MCP4xxx_DigPot.h>    // Vulintus MCP4xxx digital potentiometer library.     
+#include <Vulintus_MCP4xxx_DigiPot.h>    // Vulintus MCP4xxx digital potentiometer library.     
 
 
 // CLASS FUNCTIONS ***********************************************************// 
 
 // Class constructor (default SPI with chip select).
-Vulintus_MCP4xxx_DigPot::Vulintus_MCP4xxx_DigPot(uint8_t pin_cs)
+Vulintus_MCP4xxx_DigiPot::Vulintus_MCP4xxx_DigiPot(uint8_t pin_cs)
     : _pin_cs(pin_cs)
 {
     _spi_bus = &SPI;                    // Set the SPI bus to the default bus.
@@ -38,7 +38,7 @@ Vulintus_MCP4xxx_DigPot::Vulintus_MCP4xxx_DigPot(uint8_t pin_cs)
 
 
 // Class constructor (specified SPI with chip select).
-Vulintus_MCP4xxx_DigPot::Vulintus_MCP4xxx_DigPot(SPIClass *spi_bus, uint8_t pin_cs)
+Vulintus_MCP4xxx_DigiPot::Vulintus_MCP4xxx_DigiPot(SPIClass *spi_bus, uint8_t pin_cs)
     : _pin_cs(pin_cs)
 {
     _spi_bus = spi_bus;                 // Set the SPI bus to the specified bus.
@@ -46,7 +46,7 @@ Vulintus_MCP4xxx_DigPot::Vulintus_MCP4xxx_DigPot(SPIClass *spi_bus, uint8_t pin_
 
 
 // Initialization.
-void Vulintus_MCP4xxx_DigPot::begin(void)
+void Vulintus_MCP4xxx_DigiPot::begin(void)
 {
     _spi_bus->begin();                  // Initialize the SPI bus.
     pinMode(_pin_cs, OUTPUT);           // Set the CS pin mode to output.
@@ -55,14 +55,14 @@ void Vulintus_MCP4xxx_DigPot::begin(void)
 
 
 // Read the Wiper 0 value.
-uint16_t Vulintus_MCP4xxx_DigPot::read()
+uint16_t Vulintus_MCP4xxx_DigiPot::read()
 {
     return read((uint8_t) 0);           // Read the value from wiper 0.
 }                         
 
 
 // Read the specified wiper value.
-uint16_t Vulintus_MCP4xxx_DigPot::read(uint8_t wiper_i)
+uint16_t Vulintus_MCP4xxx_DigiPot::read(uint8_t wiper_i)
 {
     if (!wiper_i) {
         return send_cmd(MCP4XXX_REG_WIPER0, MCP4XXX_CMD_READ, (uint16_t) 255);
@@ -74,14 +74,14 @@ uint16_t Vulintus_MCP4xxx_DigPot::read(uint8_t wiper_i)
 
 
 // Write the Wiper 0 value.
-void Vulintus_MCP4xxx_DigPot::write(uint16_t value)
+void Vulintus_MCP4xxx_DigiPot::write(uint16_t value)
 {
     write(value, (uint8_t) 0);          // Write the value to wiper 0.
 }     
 
 
 // Write the specified wiper value.
-void Vulintus_MCP4xxx_DigPot::write(uint16_t value, uint8_t wiper_i)
+void Vulintus_MCP4xxx_DigiPot::write(uint16_t value, uint8_t wiper_i)
 {
     if (!wiper_i) {
         send_cmd(MCP4XXX_REG_WIPER0, MCP4XXX_CMD_WRITE, value);
@@ -93,14 +93,14 @@ void Vulintus_MCP4xxx_DigPot::write(uint16_t value, uint8_t wiper_i)
 
 
 // Increment Wiper 0.MCP4XXX
-void Vulintus_MCP4xxx_DigPot::increment()
+void Vulintus_MCP4xxx_DigiPot::increment()
 {
     increment((uint8_t) 0);             // Increment wiper 0.
 }           
 
 
 // Increment the specified wiper.
-void Vulintus_MCP4xxx_DigPot::increment(uint8_t wiper_i)
+void Vulintus_MCP4xxx_DigiPot::increment(uint8_t wiper_i)
 {
     if (!wiper_i) {
         send_cmd(MCP4XXX_REG_WIPER0, MCP4XXX_CMD_INCR);
@@ -112,14 +112,14 @@ void Vulintus_MCP4xxx_DigPot::increment(uint8_t wiper_i)
 
 
 // Increment Wiper 1.
-void Vulintus_MCP4xxx_DigPot::decrement()
+void Vulintus_MCP4xxx_DigiPot::decrement()
 {
     decrement((uint8_t) 0);             // Decrement wiper 0.
 }                         
 
 
 // Increment the specified wiper.
-void Vulintus_MCP4xxx_DigPot::decrement(uint8_t wiper_i)
+void Vulintus_MCP4xxx_DigiPot::decrement(uint8_t wiper_i)
 {
     if (!wiper_i) {
         send_cmd(MCP4XXX_REG_WIPER0, MCP4XXX_CMD_DECR);
@@ -131,7 +131,7 @@ void Vulintus_MCP4xxx_DigPot::decrement(uint8_t wiper_i)
 
 
 // Send a command with data.
-uint16_t Vulintus_MCP4xxx_DigPot::send_cmd(uint8_t addr, uint8_t cmd, uint16_t data)
+uint16_t Vulintus_MCP4xxx_DigiPot::send_cmd(uint8_t addr, uint8_t cmd, uint16_t data)
 {
     uint8_t hi_byte = addr | cmd | (data >> 8);     // Combine the address, command and MSB to make the high byte.
     uint8_t lo_byte = data;                         // Grab the bottom 8 bits from the data for the low byte.
@@ -151,7 +151,7 @@ uint16_t Vulintus_MCP4xxx_DigPot::send_cmd(uint8_t addr, uint8_t cmd, uint16_t d
 
 
 // Send a command without data (increment, decrement).
-void Vulintus_MCP4xxx_DigPot::send_cmd(uint8_t addr, uint8_t cmd)
+void Vulintus_MCP4xxx_DigiPot::send_cmd(uint8_t addr, uint8_t cmd)
 {
     uint8_t hi_byte = addr | cmd;           // Combine the address, command and MSB to make the high byte.
 
