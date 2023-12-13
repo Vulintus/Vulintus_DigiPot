@@ -30,135 +30,75 @@
 
 // CLASS FUNCTIONS ***********************************************************// 
 
-// Class constructor (default SPI with chip select).
-Vulintus_MCP40D1x_DigiPot::Vulintus_MCP40D1x_DigiPot(uint8_t pin_cs)
-    : _pin_cs(pin_cs)
+
+// Class constructor (Default I2C bus, default address).
+Vulintus_MCP40D1x_DigiPot::Vulintus_MCP40D1x_DigiPot(void)
 {
-    _spi_bus = &SPI;                    //Set the SPI bus to the default bus.
+    _wire = &Wire;                      // Set the I2C bus to the default.
+    _addr = ADDR_MCP40D1x_E;            // Set the I2C address.
 }
 
 
-// Class constructor (specified SPI with chip select).
-Vulintus_MCP40D1x_DigiPot::Vulintus_MCP40D1x_DigiPot(SPIClass *spi_bus, uint8_t pin_cs)
-    : _pin_cs(pin_cs)
+// Class constructor (Specified I2C bus, default address.
+Vulintus_MCP40D1x_DigiPot::Vulintus_MCP40D1x_DigiPot(TwoWire *i2c_bus)
+        : _wire(i2c_bus)
 {
-    _spi_bus = spi_bus;                 // Set the SPI bus to the specified bus.
+    _addr = ADDR_MCP40D1x_E;            // Set the I2C address.
+}
+
+
+// Class constructor (Specified I2C bus, default address).
+Vulintus_MCP40D1x_DigiPot::Vulintus_MCP40D1x_DigiPot(TwoWire *i2c_bus, uint8_t addr)
+        : _wire(i2c_bus), _addr(addr)
+{
+
 }
 
 
 // Initialization.
-void Vulintus_DRV8434S::begin(void)
+void Vulintus_MCP40D1x_DigiPot::begin(void)
 {
-    _spi_bus->begin();                  //Initialize the SPI bus.
-    pinMode(_pin_cs, OUTPUT);           //Set the CS pin mode to output.
-    digitalWrite(_pin_cs, HIGH);        //Set the CS pin high.
+    _wire->begin();                     // Initialize the I2C bus.    
 }
 
 
-//Read the Wiper 0 value.
-uint16_t Vulintus_MCP40D1x_DigiPot::read()
+//Read the wiper value.
+uint8_t Vulintus_MCP40D1x_DigiPot::read(void)
 {
-    return read((uint8_t) 0);           //Read the value from wiper 0.
+    uint8_t reply;                          // Reply and success/error code.
+
+    _wire->setClock(MCP40D1X_I2C_CLKRATE);  // Set the I2C clockrate.
+    _wire->beginTransmission(_addr); 	    // Start I2C transmission.
+    _wire->write(MCP40D1X_CMD);             // Send the read/write command code (0).    
+    reply = _wire->endTransmission(); 	    // End the transmission.
+
+    if (reply) {                            // If an error occured.
+        return 0xFF;                        // Return a value of 255.
+    }
+
+    reply = _wire->requestFrom(_addr, 1);   // Request one byte.
+    if (reply) {                            // If at least one byte was returned...
+        reply = _wire->read();              // Read the returned byte.
+    }
+    else {                                  // If no bytes were returned...
+        reply = 0xFF;                       // Return a value of 255.
+    }
+
+    return reply;                           // Return the reply.
 }                         
+   
 
 
-//Read the specified wiper value.
-uint16_t Vulintus_MCP40D1x_DigiPot::read(uint8_t wiper_i)
+//Write the wiper value.
+uint8_t Vulintus_MCP40D1x_DigiPot::write(uint8_t value)
 {
-    if (!wiper_i) {
-        return send_cmd(MCP40D1X_REG_WIPER0, MCP40D1X_CMD_READ, (uint16_t) 255);
-    }
-    else {
-        return send_cmd(MCP40D1X_REG_WIPER1, MCP40D1X_CMD_READ, (uint16_t) 255);
-    }
-}          
+    uint8_t nack;                           // NACK success/error code.
 
+    _wire->setClock(MCP40D1X_I2C_CLKRATE);  // Set the I2C clockrate.
+    _wire->beginTransmission(_addr); 	    // Start I2C transmission.
+    _wire->write(MCP40D1X_CMD);             // Send the read/write command code (0).    
+    _wire->write(value);                    // Write the wiper value.
+    nack = _wire->endTransmission(); 	    // End the transmission.
 
-//Write the Wiper 0 value.
-void Vulintus_MCP40D1x_DigiPot::write(uint16_t value)
-{
-    write(value, (uint8_t) 0);          //Write the value to wiper 0.
+    return nack;                            // Return the reply.
 }     
-
-
-//Write the specified wiper value.
-void Vulintus_MCP40D1x_DigiPot::write(uint16_t value, uint8_t wiper_i)
-{
-    if (!wiper_i) {
-        send_cmd(MCP40D1X_REG_WIPER0, MCP40D1X_CMD_WRITE, value);
-    }
-    else {
-        send_cmd(MCP40D1X_REG_WIPER1, MCP40D1X_CMD_WRITE, value);
-    }
-}   
-
-
-//Increment Wiper 0.MCP40D1X
-void Vulintus_MCP40D1x_DigiPot::increment()
-{
-    increment((uint8_t) 0);             //Increment wiper 0.
-}           
-
-
-//Increment the specified wiper.
-void Vulintus_MCP40D1x_DigiPot::increment(uint8_t wiper_i)
-{
-    if (!wiper_i) {
-        send_cmd(MCP40D1X_REG_WIPER0, MCP40D1X_CMD_INCR);
-    }
-    else {
-        send_cmd(MCP40D1X_REG_WIPER1, MCP40D1X_CMD_INCR);
-    }
-}            
-
-
-//Increment Wiper 1.
-void Vulintus_MCP40D1x_DigiPot::decrement()
-{
-    decrement((uint8_t) 0);             //Decrement wiper 0.
-}                         
-
-
-//Increment the specified wiper.
-void Vulintus_MCP40D1x_DigiPot::decrement(uint8_t wiper_i)
-{
-    if (!wiper_i) {
-        send_cmd(MCP40D1X_REG_WIPER0, MCP40D1X_CMD_DECR);
-    }
-    else {
-        send_cmd(MCP40D1X_REG_WIPER1, MCP40D1X_CMD_DECR);
-    }
-}           
-
-
-//Send a command with data.
-uint16_t Vulintus_MCP40D1x_DigiPot::send_cmd(uint8_t addr, uint8_t cmd, uint16_t data)
-{
-    uint8_t hi_byte = addr | cmd | (data >> 8);     //Combine the address, command and MSB to make the high byte.
-    uint8_t lo_byte = data;                         //Grab the bottom 8 bits from the data for the low byte.
-
-    _spi_bus->beginTransaction(SPISettings(250000, MSBFIRST, SPI_MODE0));   //Set the SPI settings for this chip.
-    digitalWrite(_pin_cs, LOW);                                             //Set the chip select line low.    
-    hi_byte = _spi_bus->transfer(hi_byte);                                  //Send the high byte.
-    lo_byte = _spi_bus->transfer(lo_byte);                                  //Send the low byte.
-    digitalWrite(_pin_cs, HIGH);                                            //Set the chip select line high. 
-    _spi_bus->endTransaction();                                             //Release the SPI bus.
-
-    uint16_t reply = (uint16_t) (hi_byte << 8) + lo_byte;   //Combine the high and low bytes.
-    reply &= 0x01FF;                                        //Kick out all but the bottom 9 bits.
-
-    return reply;                                           //Return the result.
-}
-
-
-//Send a command without data (increment, decrement).
-void Vulintus_MCP40D1x_DigiPot::send_cmd(uint8_t addr, uint8_t cmd)
-{
-    uint8_t hi_byte = addr | cmd;           //Combine the address, command and MSB to make the high byte.
-
-    _spi_bus->beginTransaction(SPISettings(250000, MSBFIRST, SPI_MODE0));   //Set the SPI settings for this chip.
-    digitalWrite(_pin_cs, LOW);                                             //Set the chip select line low.    
-    _spi_bus->transfer(hi_byte);                                            //Send the high byte.
-    digitalWrite(_pin_cs, HIGH);                                            //Set the chip select line high. 
-    _spi_bus->endTransaction();                                             //Release the SPI bus.
-}                
