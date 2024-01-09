@@ -76,12 +76,12 @@ uint8_t Vulintus_MCP40D1x_DigiPot::read(void)
         return 0xFF;                        // Return a value of 255.
     }
 
-    reply = _wire->requestFrom(_addr, 1);   // Request one byte.
-    if (reply) {                            // If at least one byte was returned...
-        reply = _wire->read();              // Read the returned byte.
+    reply = _wire->requestFrom(_addr,(uint8_t) 1);  // Request one byte.
+    if (reply) {                                    // If at least one byte was returned...
+        reply = _wire->read();                      // Read the returned byte.
     }
-    else {                                  // If no bytes were returned...
-        reply = 0xFF;                       // Return a value of 255.
+    else {                                          // If no bytes were returned...
+        reply = 0xFF;                               // Return a value of 255.
     }
 
     return reply;                           // Return the reply.

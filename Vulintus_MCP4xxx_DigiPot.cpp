@@ -55,7 +55,7 @@ void Vulintus_MCP4xxx_DigiPot::begin(void)
 
 
 // Read the Wiper 0 value.
-uint16_t Vulintus_MCP4xxx_DigiPot::read()
+uint16_t Vulintus_MCP4xxx_DigiPot::read(void)
 {
     return read((uint8_t) 0);           // Read the value from wiper 0.
 }                         
@@ -136,6 +136,7 @@ uint16_t Vulintus_MCP4xxx_DigiPot::send_cmd(uint8_t addr, uint8_t cmd, uint16_t 
     uint8_t hi_byte = addr | cmd | (data >> 8);     // Combine the address, command and MSB to make the high byte.
     uint8_t lo_byte = data;                         // Grab the bottom 8 bits from the data for the low byte.
 
+    Serial.print()
     _spi_bus->beginTransaction(SPISettings(250000, MSBFIRST, SPI_MODE0));   // Set the SPI settings for this chip.
     digitalWrite(_pin_cs, LOW);                                             // Set the chip select line low.    
     hi_byte = _spi_bus->transfer(hi_byte);                                  // Send the high byte.
