@@ -1,10 +1,14 @@
 /* 
+
     Vulintus_MCP40D1x_DigiPot.h
 
     Copyright 2023, Vulintus, Inc.
     
-    Arduino-compatible library for the Microchip MCP40D17/18/19 series digital
-    potentiometers/rheostats using an I2C interface.
+    Arduino-compatible library for the Microchip MCP40D1x series single digital
+    potentiometers/rheostats, including:
+        - MCP4131 -> Single rheostat, I2C, RAM memory, 7-bit
+        - MCP4132 -> Single potentiometer, I2C, RAM memory, 7-bit
+        - MCP4141 -> Single rheostat, I2C, RAM memory, 7-bit
 
     Licensed under the Apache License, Version 2.0 (the "License"); you may not 
     use this file except in compliance with the License.
@@ -21,11 +25,15 @@
 
     UPDATE LOG:
         2023-12-12 - Drew Sloan - Library first created.
+        2024-07-17 - Drew Sloan - Converted to a base MCP4xxx class with 
+                                  inheriting classs for the 128 and 256 step 
+                                  variants.
+
 */
 
 
-#ifndef VULINTUS_MCP40D1X_H
-#define VULINTUS_MCP40D1X_H
+#ifndef VULINTUS_MCP40D1X_DIGIPOT_H
+#define VULINTUS_MCP40D1X_DIGIPOT_H
 
 
 //Included libraries.//
@@ -35,39 +43,38 @@
 #include <Vulintus_DigiPot.h>       // Vulintus digital potentiometer base class.
 
 
-// I2C addresses
-enum MCP40D1x_I2C_Addr : uint8_t {
-    MCP40D1x_E_I2C_ADDR = 0x2E,     // Used by most variants.
-    MCP40D18_AE_I2C_ADDR = 0x3E,    // Only used by the MCP40D18-xxxAE/LT variants.
+// DEFINITIONS *******************************************************************************************************//
+enum MCP40D1x_I2C_addr : uint8_t {
+    MCP40D1x_E_I2C_ADDR  = 0b0101110,   // 0x2E, used by most variants.
+    MCP40D18_AE_I2C_ADDR = 0b0111110,   // 0x3E, only used by the MCP40D18-xxxAE variants.
 };
 
 
-// CLASS *************************************************************************************************************// 
+// CLASSES ***********************************************************************************************************// 
 class Vulintus_MCP40D1x_DigiPot : public Vulintus_DigiPot {
 
 	public:
 
 		// Constructor. //
-		Vulintus_MCP40D1x_DigiPot(void);                                        // Default I2C bus, default address.
-        Vulintus_MCP40D1x_DigiPot(TwoWire *i2c_bus);                            // Specified I2C bus, default address.
-        Vulintus_MCP40D1x_DigiPot(TwoWire *i2c_bus, MCP40D1x_I2C_Addr addr);   // Specified I2C bus, default address.
+        Vulintus_MCP40D1x_DigiPot(MCP40D1x_I2C_addr addr = MCP40D1x_E_I2C_ADDR, \
+                TwoWire *i2c_bus = &Wire);
 
         // Public variables matching "Vulintus_DigiPot" base class. //
-        float wiper_resistance = 75;                            // Wiper resistance, in ohms.
-        float max_resistance = 10000;                           // Maximum resistance (not counting wiper), in ohms
+        float wiper_resistance = 75;        // Wiper resistance, in ohms.
+        float max_resistance = 10000;       // Maximum resistance (not counting wiper), in ohms
 
         // Public functions matching "Vulintus_DigiPot" base class. //
-        uint8_t begin(void); 							            // Initialization.       
+        uint8_t begin(void); 		        // Initialization.          
 
-		float set_scaled(float float_scaled);				    // Write the Wiper 0 value, scaled 0-1.
+		float set_scaled(float float_scaled);			        // Write the Wiper 0 value, scaled 0-1.
 		float set_scaled(float float_scaled, uint8_t wiper_i);  // Write the specified wiper value, scaled 0-1.
 		float get_scaled(void);                                 // Read the Wiper 0 value, scaled 0-1.
         float get_scaled(uint8_t wiper_i);         		        // Read the specified wiper value, scaled 0-1.
 
-        float set_resistance(float float_ohms) = 0;					    // Write the Wiper 0 value, in real resistance (ohms).
-		float set_resistance(float float_ohms, uint8_t wiper_i) = 0;	// Write the specified wiper value, in real resistance (ohms).
-		float get_resistance(void);                        			    // Read the Wiper 0 value, in real resistance (ohms).
-        float get_resistance(uint8_t wiper_i);         				    // Read the specified wiper value, in real resistance (ohms).
+        float set_resistance(float float_ohms);					    // Write the Wiper 0 value, in real resistance (ohms).
+		float set_resistance(float float_ohms, uint8_t wiper_i);    // Write the specified wiper value, in real resistance (ohms).
+		float get_resistance(void);                        		    // Read the Wiper 0 value, in real resistance (ohms).
+        float get_resistance(uint8_t wiper_i);         			    // Read the specified wiper value, in real resistance (ohms).
 
         // Public Functions. //
         uint8_t read(void);             //Read the wiper value.
@@ -81,9 +88,9 @@ class Vulintus_MCP40D1x_DigiPot : public Vulintus_DigiPot {
         const uint16_t _n_resistors = 127;                      // Number of resistors in the ladder network.   
 
         // Private Variables. //
-        TwoWire *_wire;                 // I2C interface pointer.
-        uint8_t _addr;                  // I2C address.
+        TwoWire *_i2c_bus;              // I2C interface pointer.
+        uint8_t _i2c_addr;              // I2C address.
 
 };
 
-#endif      // #ifndef VULINTUS_MCP40D1X_H
+#endif      // #ifndef VULINTUS_MCP40D1X_DIGIPOT_H

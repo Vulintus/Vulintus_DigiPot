@@ -52,6 +52,7 @@
 // Included libraries.// 
 #include <Arduino.h>                // Arduino main header.
 #include <SPI.h>		            // Standard Arduino SPI library.
+#include <Wire.h>                   // Arduino I2C library.
 
 #include <Vulintus_DigiPot.h>       // Vulintus digital potentiometer base class.
 
@@ -68,8 +69,8 @@ enum MCP4xxx_I2C_addr : uint8_t {
     MCP4XXX_I2C_ADDR_HHH = 0b0101111,   //0x2F, MCP45x1/45x2/46x1/46x2.
 };
 
-// CLASSES ***********************************************************************************************************// 
 
+// CLASSES ***********************************************************************************************************// 
 class Vulintus_MCP4xxx_DigiPot : public Vulintus_DigiPot {
 
 	public:

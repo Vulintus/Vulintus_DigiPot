@@ -31,36 +31,22 @@
 // CLASS FUNCTIONS ***********************************************************// 
 
 
-// Class constructor (Default I2C bus, default address).
-Vulintus_MCP40D1x_DigiPot::Vulintus_MCP40D1x_DigiPot(void)
+// Class constructor.
+Vulintus_MCP40D1x_DigiPot::Vulintus_MCP40D1x_DigiPot(MCP40D1x_I2C_addr addr, TwoWire *i2c_bus)
+    : _i2c_addr(addr)
 {
-    _wire = &Wire;                      // Set the I2C bus to the default.
-    _addr = MCP40D1x_E_I2C_ADDR;        // Set the I2C address.
-}
-
-
-// Class constructor (Specified I2C bus, default address.
-Vulintus_MCP40D1x_DigiPot::Vulintus_MCP40D1x_DigiPot(TwoWire *i2c_bus)
-        : _wire(i2c_bus)
-{
-    _addr = MCP40D1x_E_I2C_ADDR;        // Set the I2C address.
-}
-
-
-// Class constructor (Specified I2C bus, default address).
-Vulintus_MCP40D1x_DigiPot::Vulintus_MCP40D1x_DigiPot(TwoWire *i2c_bus, MCP40D1x_I2C_Addr addr)
-        : _wire(i2c_bus), _addr(addr)
-{
-
+    _i2c_bus = &Wire;                       // Set the I2C bus to the default.
 }
 
 
 // Initialization.
 uint8_t Vulintus_MCP40D1x_DigiPot::begin(void)
 {
-    uint8_t success;
-    // uint8_t success = _wire->begin();                     // Initialize the I2C bus.    
-    return success;
+    uint8_t error = 0;                          // Assume no connection error.
+    _i2c_bus->begin();                          // Initialize the I2C bus.
+    _i2c_bus->beginTransmission(_i2c_addr);     // Start an I2C transmission to the chip.
+    error = _i2c_bus->endTransmission();        // Check for an ACK from the chip.
+    return error;                               // Return the error value.
 }
 
 
@@ -139,7 +125,7 @@ float Vulintus_MCP40D1x_DigiPot::get_resistance(void)
 float Vulintus_MCP40D1x_DigiPot::get_resistance(uint8_t wiper_i)
 {
     float float_val = get_scaled(wiper_i);              // Read the scaled value of the wiper, 0-1.
-    float_val += (wiper_resistance + max_resistance);   // Multiply by the wiper resistance and max resistance to get the actual resistance value.
+    float_val *= (wiper_resistance + max_resistance);   // Multiply by the wiper resistance and max resistance to get the actual resistance value.
     return float_val;                                   // Return the float value.
 }		
 
@@ -147,26 +133,26 @@ float Vulintus_MCP40D1x_DigiPot::get_resistance(uint8_t wiper_i)
 //Read the wiper value.
 uint8_t Vulintus_MCP40D1x_DigiPot::read(void)
 {
-    uint8_t reply;                          // Reply and success/error code.
+    uint8_t reply;                              // Reply and success/error code.
 
-    _wire->setClock(MCP40D1X_I2C_CLKRATE);  // Set the I2C clockrate.
-    _wire->beginTransmission(_addr); 	    // Start I2C transmission.
-    _wire->write(MCP40D1X_CMD);             // Send the read/write command code (0).    
-    reply = _wire->endTransmission(); 	    // End the transmission.
+    _i2c_bus->setClock(MCP40D1X_I2C_CLKRATE);   // Set the I2C clockrate.
+    _i2c_bus->beginTransmission(_i2c_addr);     // Start I2C transmission.
+    _i2c_bus->write(MCP40D1X_CMD);              // Send the read/write command code (0).    
+    reply = _i2c_bus->endTransmission(); 	    // End the transmission.
 
-    if (reply) {                            // If an error occured.
-        return 0xFF;                        // Return a value of 255.
+    if (reply) {                                // If an error occured.
+        return 0xFF;                            // Return a value of 255.
     }
 
-    reply = _wire->requestFrom(_addr,(uint8_t) 1);  // Request one byte.
-    if (reply) {                                    // If at least one byte was returned...
-        reply = _wire->read();                      // Read the returned byte.
+    reply = _i2c_bus->requestFrom(_i2c_addr,(uint8_t) 1);  // Request one byte.
+    if (reply) {                                // If at least one byte was returned...
+        reply = _i2c_bus->read();               // Read the returned byte.
     }
-    else {                                          // If no bytes were returned...
-        reply = 0xFF;                               // Return a value of 255.
+    else {                                      // If no bytes were returned...
+        reply = 0xFF;                           // Return a value of 255.
     }
 
-    return reply;                           // Return the reply.
+    return reply;                               // Return the reply.
 }                         
    
 
@@ -174,13 +160,13 @@ uint8_t Vulintus_MCP40D1x_DigiPot::read(void)
 //Write the wiper value.
 uint8_t Vulintus_MCP40D1x_DigiPot::write(uint8_t value)
 {
-    uint8_t nack;                           // NACK success/error code.
+    uint8_t nack;                               // NACK success/error code.
 
-    _wire->setClock(MCP40D1X_I2C_CLKRATE);  // Set the I2C clockrate.
-    _wire->beginTransmission(_addr); 	    // Start I2C transmission.
-    _wire->write(MCP40D1X_CMD);             // Send the read/write command code (0).    
-    _wire->write(value);                    // Write the wiper value.
-    nack = _wire->endTransmission(); 	    // End the transmission.
+    _i2c_bus->setClock(MCP40D1X_I2C_CLKRATE);   // Set the I2C clockrate.
+    _i2c_bus->beginTransmission(_i2c_addr);     // Start I2C transmission.
+    _i2c_bus->write(MCP40D1X_CMD);              // Send the read/write command code (0).    
+    _i2c_bus->write(value);                     // Write the wiper value.
+    nack = _i2c_bus->endTransmission(); 	    // End the transmission.
 
-    return nack;                            // Return the reply.
+    return nack;                                // Return the reply.
 }     
