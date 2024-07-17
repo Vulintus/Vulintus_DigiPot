@@ -27,14 +27,28 @@ Vulintus_DigiPot::~Vulintus_DigiPot(void)
 
 
 // Read the Wiper 0 value, scaled 0-1.
-float Vulintus_DigiPot::read_float(void)
+float Vulintus_DigiPot::get_scaled(void)
 {
     return (float) -1;
 }
 
 
 // Read the specified wiper value, scaled 0-1.
-float Vulintus_DigiPot::read_float(uint8_t wiper_i)
+float Vulintus_DigiPot::get_scaled(uint8_t wiper_i)
+{
+    return (float) -1;
+}
+
+
+// Read the Wiper 0 value, in real resistance.
+float Vulintus_DigiPot::get_resistance(void)
+{
+    return (float) -1;
+}
+
+
+// Read the specified wiper value, in real resistance.
+float Vulintus_DigiPot::get_resistance(uint8_t wiper_i)
 {
     return (float) -1;
 }
