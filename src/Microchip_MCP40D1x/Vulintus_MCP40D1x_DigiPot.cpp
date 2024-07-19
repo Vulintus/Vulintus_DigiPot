@@ -32,7 +32,7 @@
 
 
 // Class constructor.
-Vulintus_MCP40D1x_DigiPot::Vulintus_MCP40D1x_DigiPot(MCP40D1x_I2C_addr addr, TwoWire *i2c_bus)
+Vulintus_MCP40D1x_DigiPot::Vulintus_MCP40D1x_DigiPot(uint8_t addr, TwoWire *i2c_bus)
     : _i2c_addr(addr)
 {
     _i2c_bus = &Wire;                       // Set the I2C bus to the default.

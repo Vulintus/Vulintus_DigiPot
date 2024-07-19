@@ -60,7 +60,7 @@ Vulintus_MCP4xxx_DigiPot::Vulintus_MCP4xxx_DigiPot(uint16_t n_resistors, uint8_t
 
 // Class constructor (I2C with address).
 Vulintus_MCP4xxx_DigiPot::Vulintus_MCP4xxx_DigiPot(uint16_t n_resistors, TwoWire *i2c_bus, \
-        MCP4xxx_I2C_addr i2c_addr)
+        uint8_t i2c_addr)
     : _n_resistors(n_resistors), _i2c_addr(i2c_addr)
 {
     _i2c_bus = i2c_bus;                 // Set the I2C bus to the specified bus.

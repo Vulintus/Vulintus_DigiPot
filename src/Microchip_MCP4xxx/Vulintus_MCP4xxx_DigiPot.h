@@ -78,7 +78,7 @@ class Vulintus_MCP4xxx_DigiPot : public Vulintus_DigiPot {
 		// Constructors. // 
         Vulintus_MCP4xxx_DigiPot(uint16_t n_resistors, uint8_t pin_cs, SPIClass *spi_bus = &SPI);
         Vulintus_MCP4xxx_DigiPot(uint16_t n_resistors, TwoWire *i2c_bus = &Wire, \
-                MCP4xxx_I2C_addr i2c_addr = MCP4XXX_I2C_ADDR_HHL);
+                uint8_t i2c_addr = MCP4XXX_I2C_ADDR_HHL);
 
         // Public variables matching "Vulintus_DigiPot" base class. //
         float wiper_resistance = 75;        // Wiper resistance, in ohms.
@@ -139,7 +139,7 @@ class Vulintus_MCP4xxx_DigiPot : public Vulintus_DigiPot {
         uint8_t _pin_cs;                // Chip select pin.
 
         TwoWire *_i2c_bus = NULL;       // I2C interface pointer.
-        MCP4xxx_I2C_addr _i2c_addr;     // I2C address.
+        uint8_t _i2c_addr;              // I2C address.
         
         uint16_t _n_resistors;          // Number of resistors in the ladder network.        
 
@@ -180,7 +180,7 @@ class Vulintus_MCP4xxx_I2C_128_DigiPot : public Vulintus_MCP4xxx_DigiPot {
 
     public:
             
-        Vulintus_MCP4xxx_I2C_128_DigiPot(TwoWire *i2c_bus = &Wire, MCP4xxx_I2C_addr i2c_addr = MCP4XXX_I2C_ADDR_HHL) 
+        Vulintus_MCP4xxx_I2C_128_DigiPot(TwoWire *i2c_bus = &Wire, uint8_t i2c_addr = MCP4XXX_I2C_ADDR_HHL) 
             : Vulintus_MCP4xxx_DigiPot(128, i2c_bus, i2c_addr)
         { 
             //empty
@@ -193,7 +193,7 @@ class Vulintus_MCP4xxx_I2C_256_DigiPot : public Vulintus_MCP4xxx_DigiPot {
 
     public:
     
-        Vulintus_MCP4xxx_I2C_256_DigiPot(TwoWire *i2c_bus = &Wire, MCP4xxx_I2C_addr i2c_addr = MCP4XXX_I2C_ADDR_HHL) 
+        Vulintus_MCP4xxx_I2C_256_DigiPot(TwoWire *i2c_bus = &Wire, uint8_t i2c_addr = MCP4XXX_I2C_ADDR_HHL) 
             : Vulintus_MCP4xxx_DigiPot(256, i2c_bus, i2c_addr)
         { 
             //empty

@@ -56,7 +56,7 @@ class Vulintus_MCP40D1x_DigiPot : public Vulintus_DigiPot {
 	public:
 
 		// Constructor. //
-        Vulintus_MCP40D1x_DigiPot(MCP40D1x_I2C_addr addr = MCP40D1x_E_I2C_ADDR, \
+        Vulintus_MCP40D1x_DigiPot(uint8_t addr = MCP40D1x_E_I2C_ADDR, \
                 TwoWire *i2c_bus = &Wire);
 
         // Public variables matching "Vulintus_DigiPot" base class. //
