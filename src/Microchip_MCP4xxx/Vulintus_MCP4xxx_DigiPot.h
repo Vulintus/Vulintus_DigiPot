@@ -154,7 +154,7 @@ class Vulintus_MCP4xxx_SPI_128_DigiPot : public Vulintus_MCP4xxx_DigiPot {
 
     public:
             
-        Vulintus_MCP4xxx_SPI_128_DigiPot(uint8_t pin_cs, SPIClass *spi_bus) 
+        Vulintus_MCP4xxx_SPI_128_DigiPot(uint8_t pin_cs, SPIClass *spi_bus = &SPI) 
             : Vulintus_MCP4xxx_DigiPot(128, pin_cs, spi_bus)
         { 
             //empty
@@ -167,7 +167,7 @@ class Vulintus_MCP4xxx_SPI_256_DigiPot : public Vulintus_MCP4xxx_DigiPot {
 
     public:
     
-        Vulintus_MCP4xxx_SPI_256_DigiPot(uint8_t pin_cs, SPIClass *spi_bus) 
+        Vulintus_MCP4xxx_SPI_256_DigiPot(uint8_t pin_cs, SPIClass *spi_bus = &SPI) 
             : Vulintus_MCP4xxx_DigiPot(256, pin_cs, spi_bus)
         { 
             //empty
