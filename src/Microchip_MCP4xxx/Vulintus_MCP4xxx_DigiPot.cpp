@@ -257,7 +257,7 @@ uint16_t Vulintus_MCP4xxx_DigiPot::send_cmd(uint8_t addr, uint8_t cmd, uint16_t 
             if (reply) {                            // If an error occured.
                 return 0xFFFF;                      // Return a value of 65535.
             }
-            reply = _i2c_bus->requestFrom(_i2c_addr, 2);   // Request two bytes.
+            reply = _i2c_bus->requestFrom(_i2c_addr, (uint8_t) 2);  // Request two bytes.
             if (reply < 2) {                        // If two bytes weren't returned...
                 while (_i2c_bus->available()) {     // Loop until the I2C buffer is cleared.
                     _i2c_bus->read();               // Read and discard each byte.
@@ -295,7 +295,7 @@ void Vulintus_MCP4xxx_DigiPot::send_cmd(uint8_t addr, uint8_t cmd)
 
     if (_spi_bus == NULL) {                             // I2C mode (SPI pointer is NULL).
         _i2c_bus->setClock(MCP4XXX_I2C_CLKRATE);        // Set the I2C clockrate.
-        _i2c_bus->beginTransmission(_i2c_addr); 	        // Start I2C transmission.
+        _i2c_bus->beginTransmission(_i2c_addr); 	    // Start I2C transmission.
         _i2c_bus->write(hi_byte);                       // Send the high byte.
         _i2c_bus->endTransmission(); 	                // End the transmission.
     }
