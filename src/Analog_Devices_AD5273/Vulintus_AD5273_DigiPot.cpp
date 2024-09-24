@@ -1,21 +1,22 @@
 /* 
-    Vulintus_MCP40D1x_DigiPot.cpp
 
-    Copyright 2023, Vulintus, Inc.
+    Vulintus_AD5273_DigiPot.cpp
+
+    Copyright 2024, Vulintus, Inc.
     
-    See "Vulintus_MCP40D1x_DigiPot.h" for documentation and change log.
+    See "Vulintus_AD5273_DigiPot.h" for documentation and change log.
 
 */
 
 
-#include <Microchip_MCP40D1x/Vulintus_MCP40D1x_DigiPot.h>    //Vulintus MCP40D1x digital potentiometer library.     
+#include <Analog_Devices_AD5273/Vulintus_AD5273_DigiPot.h>    //Vulintus AD5273 digital potentiometer library.     
 
 
 // CLASS FUNCTIONS ***********************************************************// 
 
 
 // Class constructor.
-Vulintus_MCP40D1x_DigiPot::Vulintus_MCP40D1x_DigiPot(uint8_t addr, TwoWire *i2c_bus)
+Vulintus_AD5273_DigiPot::Vulintus_AD5273_DigiPot(AD5273_I2C_addr addr, TwoWire *i2c_bus)
     : _i2c_addr(addr)
 {
     _i2c_bus = &Wire;                       // Set the I2C bus to the default.
@@ -23,7 +24,7 @@ Vulintus_MCP40D1x_DigiPot::Vulintus_MCP40D1x_DigiPot(uint8_t addr, TwoWire *i2c_
 
 
 // Initialization.
-uint8_t Vulintus_MCP40D1x_DigiPot::begin(void)
+uint8_t Vulintus_AD5273_DigiPot::begin(void)
 {
     uint8_t error = 0;                          // Assume no connection error.
     _i2c_bus->begin();                          // Initialize the I2C bus.
@@ -34,7 +35,7 @@ uint8_t Vulintus_MCP40D1x_DigiPot::begin(void)
 
 
 // Write the Wiper 0 value, scaled 0-1 (Vulintus_DigiPot base class function).
-float Vulintus_MCP40D1x_DigiPot::set_scaled(float float_scaled)
+float Vulintus_AD5273_DigiPot::set_scaled(float float_scaled)
 {
     float_scaled *= (float) _n_resistors;   // Calculate the fractional number of steps.
     uint16_t uint_val = float_scaled;       // Convert the float to a uint16.
@@ -45,7 +46,7 @@ float Vulintus_MCP40D1x_DigiPot::set_scaled(float float_scaled)
 
 
 // Write the specified wiper value, scaled 0-1 (Vulintus_DigiPot base class function).
-float Vulintus_MCP40D1x_DigiPot::set_scaled(float float_val, uint8_t wiper_i)
+float Vulintus_AD5273_DigiPot::set_scaled(float float_val, uint8_t wiper_i)
 {
     float_val = set_scaled(float_val);     // Write the value, ignoring the wiper index.
     return float_val;                      // Return the actual scaled value.
@@ -53,7 +54,7 @@ float Vulintus_MCP40D1x_DigiPot::set_scaled(float float_val, uint8_t wiper_i)
 
 
 // Read the Wiper 0 value, scaled 0-1 (Vulintus_DigiPot base class function).
-float Vulintus_MCP40D1x_DigiPot::get_scaled(void)
+float Vulintus_AD5273_DigiPot::get_scaled(void)
 {
     float float_val = read();                           // Read the wiper value, ignoring the wiper index.
     float_val /= (float) _n_resistors;                  // Convert the step setting to fractional 0-1.
@@ -65,7 +66,7 @@ float Vulintus_MCP40D1x_DigiPot::get_scaled(void)
 
 
 // Read the specified wiper value, scaled 0-1 (Vulintus_DigiPot base class function).
-float Vulintus_MCP40D1x_DigiPot::get_scaled(uint8_t wiper_i)
+float Vulintus_AD5273_DigiPot::get_scaled(uint8_t wiper_i)
 {
     float float_val = get_scaled();         // Read the scaled value, ignoring the wiper index.
     return float_val;                       // Return the scaled float value.
@@ -73,7 +74,7 @@ float Vulintus_MCP40D1x_DigiPot::get_scaled(uint8_t wiper_i)
 
 
 // Write the Wiper 0 value, in real resistance (ohms).
-float Vulintus_MCP40D1x_DigiPot::set_resistance(float float_val)
+float Vulintus_AD5273_DigiPot::set_resistance(float float_val)
 {
     float_val = set_resistance(float_val, (uint8_t) 0);     // Set the resistance (ohms) on wiper 0.
     return float_val;                                       // Return the float value.
@@ -81,7 +82,7 @@ float Vulintus_MCP40D1x_DigiPot::set_resistance(float float_val)
 
 
 // Write the specified wiper value, in real resistance (ohms).
-float Vulintus_MCP40D1x_DigiPot::set_resistance(float float_val, uint8_t wiper_i)
+float Vulintus_AD5273_DigiPot::set_resistance(float float_val, uint8_t wiper_i)
 {
     if (float_val > wiper_resistance) {             // If the specified resistance is greater than the wiper resistance...
         float_val -= wiper_resistance;              // Subtract the wiper resistance.
@@ -98,14 +99,14 @@ float Vulintus_MCP40D1x_DigiPot::set_resistance(float float_val, uint8_t wiper_i
 
 
 // Read the Wiper 0 value, in real resistance (ohms).
-float Vulintus_MCP40D1x_DigiPot::get_resistance(void)
+float Vulintus_AD5273_DigiPot::get_resistance(void)
 {
     float float_val = get_resistance((uint8_t) 0);      // Fetch the resistance from wiper 0.
 }    			
 
 
 // Read the specified wiper value, in real resistance (ohms).
-float Vulintus_MCP40D1x_DigiPot::get_resistance(uint8_t wiper_i)
+float Vulintus_AD5273_DigiPot::get_resistance(uint8_t wiper_i)
 {
     float float_val = get_scaled(wiper_i);              // Read the scaled value of the wiper, 0-1.
     float_val *= (wiper_resistance + max_resistance);   // Multiply by the wiper resistance and max resistance to get the actual resistance value.
@@ -114,18 +115,11 @@ float Vulintus_MCP40D1x_DigiPot::get_resistance(uint8_t wiper_i)
 
 
 //Read the wiper value.
-uint8_t Vulintus_MCP40D1x_DigiPot::read(void)
+uint8_t Vulintus_AD5273_DigiPot::read(void)
 {
     uint8_t reply;                              // Reply and success/error code.
 
-    _i2c_bus->setClock(MCP40D1X_I2C_CLKRATE);   // Set the I2C clockrate.
-    _i2c_bus->beginTransmission(_i2c_addr);     // Start I2C transmission.
-    _i2c_bus->write(MCP40D1X_CMD);              // Send the read/write command code (0).    
-    reply = _i2c_bus->endTransmission(); 	    // End the transmission.
-
-    if (reply) {                                // If an error occured.
-        return 0xFF;                            // Return a value of 255.
-    }
+    _i2c_bus->setClock(AD5273_I2C_CLKRATE);     // Set the I2C clockrate.
 
     reply = _i2c_bus->requestFrom(_i2c_addr,(uint8_t) 1);  // Request one byte.
     if (reply) {                                // If at least one byte was returned...
@@ -141,13 +135,13 @@ uint8_t Vulintus_MCP40D1x_DigiPot::read(void)
 
 
 //Write the wiper value.
-uint8_t Vulintus_MCP40D1x_DigiPot::write(uint8_t value)
+uint8_t Vulintus_AD5273_DigiPot::write(uint8_t value)
 {
     uint8_t nack;                               // NACK success/error code.
 
-    _i2c_bus->setClock(MCP40D1X_I2C_CLKRATE);   // Set the I2C clockrate.
+    _i2c_bus->setClock(AD5273_I2C_CLKRATE);     // Set the I2C clockrate.
     _i2c_bus->beginTransmission(_i2c_addr);     // Start I2C transmission.
-    _i2c_bus->write(MCP40D1X_CMD);              // Send the read/write command code (0).    
+    _i2c_bus->write(AD5273_CMD);                // Send the read/write command code (0).    
     _i2c_bus->write(value);                     // Write the wiper value.
     nack = _i2c_bus->endTransmission(); 	    // End the transmission.
 

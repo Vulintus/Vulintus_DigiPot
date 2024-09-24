@@ -1,46 +1,10 @@
 /* 
 
-    Vulintus_MCP4xxx_DigiPot.h
+    Vulintus_MCP4xxx_DigiPot.cpp
 
     Copyright 2023, Vulintus, Inc.
     
-    Arduino-compatible library for the Microchip MCP4xxx series single and 
-    MCP42xx series dual digital potentiometers/rheostats, including:
-        - MCP4131 -> Single potentiometer, SPI, RAM memory, 7-bit
-        - MCP4132 -> Single rheostat, SPI, RAM memory, 7-bit
-        - MCP4141 -> Single potentiometer, SPI, EE memory, 7-bit
-        - MCP4142 -> Single rheostat, SPI, EE memory, 7-bit
-        - MCP4151 -> Single potentiometer, SPI, RAM memory, 8-bit
-        - MCP4152 -> Single rheostat, SPI, RAM memory, 8-bit
-        - MCP4161 -> Single potentiometer, SPI, EE memory, 8-bit
-        - MCP4162 -> Single rheostat, SPI, EE memory, 8-bit
-        - MCP4231 -> Dual potentiometer, SPI, RAM memory, 7-bit
-        - MCP4232 -> Dual rheostat, SPI, RAM memory, 7-bit
-        - MCP4241 -> Dual potentiometer, SPI, EE memory, 7-bit
-        - MCP4242 -> Dual rheostat, SPI, EE memory, 7-bit
-        - MCP4251 -> Dual potentiometer, SPI, RAM memory, 8-bit
-        - MCP4252 -> Dual rheostat, SPI, RAM memory, 8-bit
-        - MCP4261 -> Dual potentiometer, SPI, EE memory, 8-bit
-        - MCP4262 -> Dual rheostat, SPI, E memory, 8-bit
-
-    Licensed under the Apache License, Version 2.0 (the "License"); you may not 
-    use this file except in compliance with the License.
-
-    You may obtain a copy of the License at
-
-    http:// www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS, WITHOUT 
-    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
-    License for the specific language governing permissions and limitations 
-    under the License.
-
-    UPDATE LOG:
-        2023-08-22 - Drew Sloan - Library first created.
-        2024-07-16 - Drew Sloan - Converted to a base MCP4xxx class with 
-                                  inheriting classs for the 128 and 256 step 
-                                  variants.
+    See "Vulintus_MCP4xxx_DigiPot.h" for documentation and change log.
                                         
 */
 
@@ -59,8 +23,7 @@ Vulintus_MCP4xxx_DigiPot::Vulintus_MCP4xxx_DigiPot(uint16_t n_resistors, uint8_t
 
 
 // Class constructor (I2C with address).
-Vulintus_MCP4xxx_DigiPot::Vulintus_MCP4xxx_DigiPot(uint16_t n_resistors, TwoWire *i2c_bus, \
-        uint8_t i2c_addr)
+Vulintus_MCP4xxx_DigiPot::Vulintus_MCP4xxx_DigiPot(uint16_t n_resistors, uint8_t i2c_addr, TwoWire *i2c_bus)
     : _n_resistors(n_resistors), _i2c_addr(i2c_addr)
 {
     _i2c_bus = i2c_bus;                 // Set the I2C bus to the specified bus.

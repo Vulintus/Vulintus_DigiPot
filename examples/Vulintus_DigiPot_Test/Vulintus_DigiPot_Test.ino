@@ -15,20 +15,27 @@
 #include <Vulintus_DigiPot.h>               // Vulintus digital potentiometer/rheostat catch-all library.
 
 // Pin assignments. // 
-#define PIN_CS            9                 // Chip-select for SPI potentiometers.
-#define PIN_ANALOG_CHECK  PIN_DRV_VREF      // Analog pin connected to voltage divider output, for debugging. 
+#define PIN_CS              9               // Chip-select for SPI potentiometers.
+#if defined(PIN_DRV_VREF)                   // If a VREF pin is defined...
+  #define PIN_ANALOG_CHECK  PIN_DRV_VREF    // Analog pin connected to voltage divider output, for debugging.
+#else                                       // Otherwise...
+  #define PIN_ANALOG_CHECK  A0              // Use any analog pin.
+#endif
 
 // I2C address. // 
-#define I2C_ADDR  MCP4XXX_I2C_ADDR_LLL      // Address for I2C potentiometers (MCP4xxx);
-#define I2C_ADDR  MCP40D1x_E_I2C_ADDR       // Address for I2C potentiometers (MCP40D1x);
+#define I2C_ADDR  AD5273I2C_ADDR_L          // Address for I2C potentiometers (AD5273);
+// #define I2C_ADDR  MCP4XXX_I2C_ADDR_LLL      // Address for I2C potentiometers (MCP4xxx);
+// #define I2C_ADDR  MCP40D1x_E_I2C_ADDR       // Address for I2C potentiometers (MCP40D1x);
 
 // Serial communication // 
 const uint32_t SERIAL_BAUD_RATE = 115200;   // Serial baud rate.
 
 // Potentiometer/rheostat object. // 
 
+Vulintus_AD5273  pot(I2C_ADDR);  // Analog devices AD5273 single potentiometer, I2C, OTP, 6-bit.
+
 // Vulintus_MCP40D17   pot(I2C_ADDR);  // Microchip MCP40D17 single rheostat, I2C, RAM memory, 7-bit.
-Vulintus_MCP40D18   pot(I2C_ADDR);  // Microchip MCP40D18 single potentiometer, I2C, RAM memory, 7-bit.
+// Vulintus_MCP40D18   pot(I2C_ADDR);  // Microchip MCP40D18 single potentiometer, I2C, RAM memory, 7-bit.
 // Vulintus_MCP40D19   pot(I2C_ADDR);  // Microchip MCP40D19 single rheostat, I2C, RAM memory, 7-bit.
 
 // Vulintus_MCP4131 pot(PIN_CS);    // Microchip MCP4131 single potentiometer, SPI, RAM memory, 7-bit
@@ -56,7 +63,7 @@ Vulintus_MCP40D18   pot(I2C_ADDR);  // Microchip MCP40D18 single potentiometer, 
 // Vulintus_MCP4552 pot(I2C_ADDR);  // Microchip MCP4552 single rheostat, I2C, RAM memory, 8-bit.
 // Vulintus_MCP4561 pot(I2C_ADDR);  // Microchip MCP4561 single potentiometer, I2C, EE memory, 8-bit.
 // Vulintus_MCP4562 pot(I2C_ADDR);  // Microchip MCP4562 single rheostat, I2C, EE memory, 8-bit.
-// Vulintus_MCP4631 pot(&Wire, I2C_ADDR);  // Microchip MCP4631 dual potentiometer, I2C, RAM memory, 7-bit. *
+// Vulintus_MCP4631 pot(I2C_ADDR);  // Microchip MCP4631 dual potentiometer, I2C, RAM memory, 7-bit. *
 // Vulintus_MCP4632 pot(I2C_ADDR);  // Microchip MCP4632 dual rheostat, I2C, RAM memory, 7-bit.
 // Vulintus_MCP4641 pot(I2C_ADDR);  // Microchip MCP4641 dual potentiometer, I2C, EE memory, 7-bit.
 // Vulintus_MCP4642 pot(I2C_ADDR);  // Microchip MCP4642 dual rheostat, I2C, EE memory, 7-bit.
@@ -85,7 +92,7 @@ void setup() {
     }
   }
 
-  #if ~defined(__AVR__)         // For non-AVR microcontrollers (generally SAMD)...
+  #if !defined(__AVR__)         // For non-AVR microcontrollers (generally SAMD)...
     analogReadResolution(12);   // Set the analog read resolution.
   #endif
 }
