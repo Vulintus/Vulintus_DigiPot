@@ -10,7 +10,7 @@
 */
 
 
-#include ".Vulintus_DigiPot.h"
+#include "./Vulintus_DigiPot.h"
 
 
 // Class Constructor. //
