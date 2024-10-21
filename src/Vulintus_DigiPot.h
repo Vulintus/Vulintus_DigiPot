@@ -51,13 +51,13 @@ class Vulintus_DigiPot
 
 
 // Analog Devices MCP40D17/18/19 (volatile/OTP, I2C).
-#include <Analog_Devices_AD5273/Vulintus_AD5273_DigiPot.h>
+#include "./Analog_Devices_AD5273/Vulintus_AD5273_DigiPot.h"
 
 // Microchip MCP40D17/18/19 (volatile, I2C).
-#include <Microchip_MCP40D1x/Vulintus_MCP40D1x_DigiPot.h>
+#include "./Microchip_MCP40D1x/Vulintus_MCP40D1x_DigiPot.h"
 
 // Microchip MCP413X/415X/423X/425X/453X/455X/463X/465X (volatile, SPI or I2C).
-#include <Microchip_MCP4xxx/Vulintus_MCP4xxx_DigiPot.h>
+#include "./Microchip_MCP4xxx/Vulintus_MCP4xxx_DigiPot.h"
 
 
 
