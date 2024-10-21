@@ -9,7 +9,8 @@
 		2024-07-08 - Drew Sloan	- Created "Vulintus_DigiPot" base class.						  
 */
 
-#include <Vulintus_DigiPot.h>
+
+#include ".Vulintus_DigiPot.h"
 
 
 // Class Constructor. //

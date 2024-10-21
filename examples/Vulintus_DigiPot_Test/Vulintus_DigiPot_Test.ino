@@ -12,7 +12,7 @@
 
 
 // Included libraries. // 
-#include <Vulintus_DigiPot.h>               // Vulintus digital potentiometer/rheostat catch-all library.
+#include "../..src/Vulintus_DigiPot.h"      // Vulintus digital potentiometer/rheostat catch-all library.
 
 // Pin assignments. // 
 #define PIN_CS              9               // Chip-select for SPI potentiometers.
