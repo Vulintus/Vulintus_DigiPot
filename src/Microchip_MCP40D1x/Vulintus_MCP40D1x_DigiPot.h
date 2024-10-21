@@ -37,10 +37,10 @@
 
 
 //Included libraries.//
-#include <Arduino.h>            // Arduino main header.
-#include <Wire.h>               // Arduino I2C library.
+#include <Arduino.h>                // Arduino main header.
+#include <Wire.h>                   // Arduino I2C library.
 
-#include <Vulintus_DigiPot.h>       // Vulintus digital potentiometer base class.
+#include "../Vulintus_DigiPot.h"    // Vulintus digital potentiometer base class.
 
 
 // DEFINITIONS *******************************************************************************************************//

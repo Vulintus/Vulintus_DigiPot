@@ -8,7 +8,7 @@
 */
 
 
-#include <Microchip_MCP40D1x/Vulintus_MCP40D1x_DigiPot.h>    //Vulintus MCP40D1x digital potentiometer library.     
+#include "./Vulintus_MCP40D1x_DigiPot.h"    //Vulintus MCP40D1x digital potentiometer library.     
 
 
 // CLASS FUNCTIONS ***********************************************************// 

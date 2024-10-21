@@ -9,7 +9,7 @@
 */
 
 
-#include <Microchip_MCP4xxx/Vulintus_MCP4xxx_DigiPot.h>     // Library header. 
+#include "./Vulintus_MCP4xxx_DigiPot.h"     // Library header. 
 
 
 // CLASS FUNCTIONS ***********************************************************// 

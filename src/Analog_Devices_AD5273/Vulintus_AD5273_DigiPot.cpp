@@ -9,7 +9,7 @@
 */
 
 
-#include <Analog_Devices_AD5273/Vulintus_AD5273_DigiPot.h>    //Vulintus AD5273 digital potentiometer library.     
+#include "./Vulintus_AD5273_DigiPot.h"    //Vulintus AD5273 digital potentiometer library.     
 
 
 // CLASS FUNCTIONS ***********************************************************// 

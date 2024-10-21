@@ -54,7 +54,7 @@
 #include <SPI.h>		            // Standard Arduino SPI library.
 #include <Wire.h>                   // Arduino I2C library.
 
-#include <Vulintus_DigiPot.h>       // Vulintus digital potentiometer base class.
+#include "../Vulintus_DigiPot.h"    // Vulintus digital potentiometer base class.
 
 
 // DEFINITIONS *******************************************************************************************************//
