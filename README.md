@@ -1,4 +1,4 @@
-# Vulintus_DigiPot_Library
+# Vulintus_DigiPot
 
 Arduino-compatible libraries for digital potentiometers/rheostats commonly used by Vulintus, including:
 * Microchip MCP413X/415X/423X/425X series (SPI).
