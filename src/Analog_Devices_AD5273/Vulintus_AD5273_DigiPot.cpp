@@ -17,9 +17,10 @@
 
 // Class constructor.
 Vulintus_AD5273_DigiPot::Vulintus_AD5273_DigiPot(AD5273_I2C_addr addr, TwoWire *i2c_bus)
-    : _i2c_addr(addr), n_resistors(63)
+    : _i2c_addr(addr)
 {
-    _i2c_bus = &Wire;                       // Set the I2C bus to the default.
+    _i2c_bus = &Wire;       // Set the I2C bus to the default.
+    n_resistors = 63;       // Set the number of resistors.
 }
 
 

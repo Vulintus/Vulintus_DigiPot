@@ -16,17 +16,18 @@
 
 // Class constructor (SPI with chip select).
 Vulintus_MCP4xxx_DigiPot::Vulintus_MCP4xxx_DigiPot(uint16_t num_resistors, uint8_t pin_cs, SPIClass *spi_bus)
-    : n_resistors(num_resistors), _pin_cs(pin_cs)
+    : _pin_cs(pin_cs)
 {
-    _spi_bus = &SPI;                    // Set the SPI bus to the default bus.
+    _spi_bus = &SPI;                    // Set the SPI bus to the default bus.    
 }
 
 
 // Class constructor (I2C with address).
 Vulintus_MCP4xxx_DigiPot::Vulintus_MCP4xxx_DigiPot(uint16_t num_resistors, uint8_t i2c_addr, TwoWire *i2c_bus)
-    : n_resistors(num_resistors), _i2c_addr(i2c_addr)
+    : _i2c_addr(i2c_addr)
 {
     _i2c_bus = i2c_bus;                 // Set the I2C bus to the specified bus.
+    n_resistors = num_resistors;        // Set the number of resistors.
 }
 
 
