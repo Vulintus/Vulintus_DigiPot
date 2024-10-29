@@ -19,7 +19,6 @@ Vulintus_MCP40D1x_DigiPot::Vulintus_MCP40D1x_DigiPot(uint8_t addr, TwoWire *i2c_
     : _i2c_addr(addr)
 {
     _i2c_bus = &Wire;       // Set the I2C bus to the default.
-    n_resistors = 127;      // Set the number of resistors.
 }
 
 

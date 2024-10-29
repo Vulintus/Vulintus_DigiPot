@@ -61,7 +61,8 @@ class Vulintus_AD5273_DigiPot : public Vulintus_DigiPot {
 
         // Public variables matching "Vulintus_DigiPot" base class. //
         float wiper_resistance = 60;            // Wiper resistance, in ohms.
-        float max_resistance = 10000;           // Maximum resistance (not counting wiper), in ohms
+        float max_resistance = 10000;           // Maximum resistance (not counting wiper), in ohms.
+        uint16_t n_resistors = 63;     	        // Number of resistors in the ladder network.  
 
         // Public functions matching "Vulintus_DigiPot" base class. //
         uint8_t begin(void); 		            // Initialization.          

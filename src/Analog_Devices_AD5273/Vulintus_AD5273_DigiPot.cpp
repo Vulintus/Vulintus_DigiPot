@@ -20,7 +20,6 @@ Vulintus_AD5273_DigiPot::Vulintus_AD5273_DigiPot(AD5273_I2C_addr addr, TwoWire *
     : _i2c_addr(addr)
 {
     _i2c_bus = &Wire;       // Set the I2C bus to the default.
-    n_resistors = 63;       // Set the number of resistors.
 }
 
 
