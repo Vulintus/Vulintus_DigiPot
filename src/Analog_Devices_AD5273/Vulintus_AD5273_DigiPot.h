@@ -84,8 +84,7 @@ class Vulintus_AD5273_DigiPot : public Vulintus_DigiPot {
 
         // Private Constants. //
         static const uint8_t AD5273_CMD = 0x00;             // Command code for read and write operations.
-        static const uint32_t AD5273_I2C_CLKRATE = 400000;  // Clock frequency for I2C communication.
-        const uint16_t _n_resistors = 63;                   // Number of resistors in the ladder network.   
+        static const uint32_t AD5273_I2C_CLKRATE = 400000;  // Clock frequency for I2C communication.         
 
         // Private Variables. //
         TwoWire *_i2c_bus;              // I2C interface pointer.

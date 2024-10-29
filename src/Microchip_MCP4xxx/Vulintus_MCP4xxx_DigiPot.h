@@ -76,8 +76,8 @@ class Vulintus_MCP4xxx_DigiPot : public Vulintus_DigiPot {
 	public:
 
 		// Constructors. // 
-        Vulintus_MCP4xxx_DigiPot(uint16_t n_resistors, uint8_t pin_cs, SPIClass *spi_bus = &SPI);
-        Vulintus_MCP4xxx_DigiPot(uint16_t n_resistors, uint8_t i2c_addr = MCP4XXX_I2C_ADDR_HHL, \
+        Vulintus_MCP4xxx_DigiPot(uint16_t num_resistors, uint8_t pin_cs, SPIClass *spi_bus = &SPI);
+        Vulintus_MCP4xxx_DigiPot(uint16_t num_resistors, uint8_t i2c_addr = MCP4XXX_I2C_ADDR_HHL, \
                 TwoWire *i2c_bus = &Wire);
 
         // Public variables matching "Vulintus_DigiPot" base class. //
@@ -139,9 +139,7 @@ class Vulintus_MCP4xxx_DigiPot : public Vulintus_DigiPot {
         uint8_t _pin_cs;                // Chip select pin.
 
         TwoWire *_i2c_bus = NULL;       // I2C interface pointer.
-        uint8_t _i2c_addr;              // I2C address.
-        
-        uint16_t _n_resistors;          // Number of resistors in the ladder network.        
+        uint8_t _i2c_addr;              // I2C address.    
 
         // Private functions. // 
         uint16_t send_cmd(uint8_t addr, uint8_t cmd, uint16_t data);     // Send a command with data.

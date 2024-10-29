@@ -33,6 +33,7 @@ class Vulintus_DigiPot
 		// Public Variables. //
 		float wiper_resistance;    	// Wiper resistance, in ohms.
 		float max_resistance;    	// Maximum resistance (not counting wiper), in ohms.
+		uint16_t n_resistors;     	// Number of resistors in the ladder network.  
 
 		// Public Functions. // 
         virtual uint8_t begin(void) = 0;		// Initialization.        

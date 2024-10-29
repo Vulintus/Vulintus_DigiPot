@@ -17,7 +17,7 @@
 
 // Class constructor.
 Vulintus_AD5273_DigiPot::Vulintus_AD5273_DigiPot(AD5273_I2C_addr addr, TwoWire *i2c_bus)
-    : _i2c_addr(addr)
+    : _i2c_addr(addr), n_resistors(63)
 {
     _i2c_bus = &Wire;                       // Set the I2C bus to the default.
 }
@@ -37,7 +37,7 @@ uint8_t Vulintus_AD5273_DigiPot::begin(void)
 // Write the Wiper 0 value, scaled 0-1 (Vulintus_DigiPot base class function).
 float Vulintus_AD5273_DigiPot::set_scaled(float float_scaled)
 {
-    float_scaled *= (float) _n_resistors;   // Calculate the fractional number of steps.
+    float_scaled *= (float) n_resistors;    // Calculate the fractional number of steps.
     uint16_t uint_val = float_scaled;       // Convert the float to a uint16.
     write(uint_val);                        // Write the value to the specified wiper.
     float_scaled = get_scaled();            // Read the actual scaled value.
@@ -57,7 +57,7 @@ float Vulintus_AD5273_DigiPot::set_scaled(float float_val, uint8_t wiper_i)
 float Vulintus_AD5273_DigiPot::get_scaled(void)
 {
     float float_val = read();                           // Read the wiper value, ignoring the wiper index.
-    float_val /= (float) _n_resistors;                  // Convert the step setting to fractional 0-1.
+    float_val /= (float) n_resistors;                   // Convert the step setting to fractional 0-1.
     float_val *= max_resistance;                        // Convert the scaled value to resistance (ohms).
     float_val += wiper_resistance;                      // Add the wiper resistance.
     float_val /= (wiper_resistance + max_resistance);   // Divide by the wiper resistance and max resistance to get the actual scaled value.
