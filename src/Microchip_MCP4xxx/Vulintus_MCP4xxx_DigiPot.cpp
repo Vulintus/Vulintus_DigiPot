@@ -59,7 +59,7 @@ float Vulintus_MCP4xxx_DigiPot::set_scaled(float float_scaled)
 
 // Write the specified wiper value, scaled 0-1 (Vulintus_DigiPot base class function).
 float Vulintus_MCP4xxx_DigiPot::set_scaled(float float_scaled, uint8_t wiper_i)
-{
+{    
     float_scaled *= (float) n_resistors;   // Calculate the fractional number of steps.
     uint16_t uint_val = float_scaled;       // Convert the float to a uint16.
     write(uint_val, wiper_i);               // Write the value to the specified wiper.
@@ -80,7 +80,7 @@ float Vulintus_MCP4xxx_DigiPot::get_scaled(void)
 float Vulintus_MCP4xxx_DigiPot::get_scaled(uint8_t wiper_i)
 {
     float float_scaled = read((uint8_t) wiper_i);           // Read the value from the specified wiper.    
-    float_scaled /= (float) n_resistors;                   // Convert the step setting to fractional 0-1.
+    float_scaled /= (float) n_resistors;                    // Convert the step setting to fractional 0-1.
     float_scaled *= max_resistance;                         // Convert the scaled value to resistance (ohms).
     float_scaled += wiper_resistance;                       // Add the wiper resistance.
     float_scaled /= (wiper_resistance + max_resistance);    // Divide by the wiper resistance and max resistance to get the actual scaled value.
