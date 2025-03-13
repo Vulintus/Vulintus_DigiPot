@@ -1,7 +1,7 @@
 /*!
 	Vulintus_DigiPot.h
 
-	Vulintus, Inc., 2023
+	copyright 2023, Vulintus, Inc.
 
 	Catch-all library for digital potentiometers/rheostats commonly used by Vulintus.
 	
