@@ -67,15 +67,11 @@ class Vulintus_MCP40D1x_DigiPot : public Vulintus_DigiPot {
         // Public functions matching "Vulintus_DigiPot" base class. //
         uint8_t begin(void); 		        // Initialization.          
 
-		float set_scaled(float float_scaled);			        // Write the Wiper 0 value, scaled 0-1.
-		float set_scaled(float float_scaled, uint8_t wiper_i);  // Write the specified wiper value, scaled 0-1.
-		float get_scaled(void);                                 // Read the Wiper 0 value, scaled 0-1.
-        float get_scaled(uint8_t wiper_i);         		        // Read the specified wiper value, scaled 0-1.
+		float set_scaled(float float_scaled, uint8_t wiper_i = 0);      // Write the specified wiper value, scaled 0-1.
+        float get_scaled(uint8_t wiper_i = 0);         		            // Read the specified wiper value, scaled 0-1.
 
-        float set_resistance(float float_ohms);					    // Write the Wiper 0 value, in real resistance (ohms).
-		float set_resistance(float float_ohms, uint8_t wiper_i);    // Write the specified wiper value, in real resistance (ohms).
-		float get_resistance(void);                        		    // Read the Wiper 0 value, in real resistance (ohms).
-        float get_resistance(uint8_t wiper_i);         			    // Read the specified wiper value, in real resistance (ohms).
+		float set_resistance(float float_ohms, uint8_t wiper_i = 0);    // Write the specified wiper value, in real resistance (ohms).
+        float get_resistance(uint8_t wiper_i = 0);         			    // Read the specified wiper value, in real resistance (ohms).
 
         // Public Functions. //
         uint8_t read(void);             //Read the wiper value.

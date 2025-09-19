@@ -38,15 +38,11 @@ class Vulintus_DigiPot
 		// Public Functions. // 
         virtual uint8_t begin(void) = 0;		// Initialization.        
 
-		virtual float set_scaled(float float_scaled) = 0;						// Write the Wiper 0 value, scaled 0-1.
-		virtual float set_scaled(float float_scaled, uint8_t wiper_i) = 0;		// Write the specified wiper value, scaled 0-1.
-		virtual float get_scaled(void);                        					// Read the Wiper 0 value, scaled 0-1.
-        virtual float get_scaled(uint8_t wiper_i);         						// Read the specified wiper value, scaled 0-1.
+		virtual float set_scaled(float float_scaled, uint8_t wiper_i = 0) = 0;		// Write the specified wiper value, scaled 0-1.
+        virtual float get_scaled(uint8_t wiper_i = 0);         						// Read the specified wiper value, scaled 0-1.
 
-		virtual float set_resistance(float float_ohms) = 0;						// Write the Wiper 0 value, in real resistance (ohms).
-		virtual float set_resistance(float float_ohms, uint8_t wiper_i) = 0;	// Write the specified wiper value, in real resistance (ohms).
-		virtual float get_resistance(void);                        				// Read the Wiper 0 value, in real resistance (ohms).
-        virtual float get_resistance(uint8_t wiper_i);         					// Read the specified wiper value, in real resistancev.
+		virtual float set_resistance(float float_ohms, uint8_t wiper_i = 0) = 0;	// Write the specified wiper value, in real resistance (ohms).
+		virtual float get_resistance(uint8_t wiper_i = 0);         					// Read the specified wiper value, in real resistance.
 
 };
 

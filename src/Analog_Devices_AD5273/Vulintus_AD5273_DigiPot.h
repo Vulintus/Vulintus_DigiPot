@@ -56,7 +56,7 @@ class Vulintus_AD5273_DigiPot : public Vulintus_DigiPot {
 	public:
 
 		// Constructor. //
-        Vulintus_AD5273_DigiPot(AD5273_I2C_addr addr = AD5273I2C_ADDR_L, \
+        Vulintus_AD5273_DigiPot(uint8_t addr = AD5273I2C_ADDR_L, \
                 TwoWire *i2c_bus = &Wire);
 
         // Public variables matching "Vulintus_DigiPot" base class. //

@@ -87,25 +87,17 @@ class Vulintus_MCP4xxx_DigiPot : public Vulintus_DigiPot {
         // Public functions matching "Vulintus_DigiPot" base class. //
         uint8_t begin(void); 		        // Initialization.       
 
-		float set_scaled(float float_scaled);			        // Write the Wiper 0 value, scaled 0-1.
-		float set_scaled(float float_scaled, uint8_t wiper_i);  // Write the specified wiper value, scaled 0-1.
-		float get_scaled(void);                                 // Read the Wiper 0 value, scaled 0-1.
-        float get_scaled(uint8_t wiper_i);         		        // Read the specified wiper value, scaled 0-1.
+		float set_scaled(float float_scaled, uint8_t wiper_i = 0);      // Write the specified wiper value, scaled 0-1.
+        float get_scaled(uint8_t wiper_i = 0);         		            // Read the specified wiper value, scaled 0-1.
 
-        float set_resistance(float float_ohms);					    // Write the Wiper 0 value, in real resistance (ohms).
-		float set_resistance(float float_ohms, uint8_t wiper_i);    // Write the specified wiper value, in real resistance (ohms).
-		float get_resistance(void);                        		    // Read the Wiper 0 value, in real resistance (ohms).
-        float get_resistance(uint8_t wiper_i);         			    // Read the specified wiper value, in real resistance (ohms).
+		float set_resistance(float float_ohms, uint8_t wiper_i = 0);    // Write the specified wiper value, in real resistance (ohms).
+        float get_resistance(uint8_t wiper_i = 0);         			    // Read the specified wiper value, in real resistance (ohms).
 
         // Public functions. //
-        uint16_t read(void);                            // Read the Wiper 0 value.
-        uint16_t read(uint8_t wiper_i);                 // Read the specified wiper value.
-        void write(uint16_t value);                     // Write the Wiper 0 value.
-        void write(uint16_t value, uint8_t wiper_i);    // Write the specified wiper value.
-        void increment(void);                           // Increment Wiper 0.
-        void increment(uint8_t wiper_i);                // Increment the specified wiper.
-        void decrement(void);                           // Decrement Wiper 0.
-        void decrement(uint8_t wiper_i);                // Decrement the specified wiper.        
+        uint16_t read(uint8_t wiper_i = 0);                 // Read the specified wiper value.
+        void write(uint16_t value, uint8_t wiper_i = 0);    // Write the specified wiper value.
+        void increment(uint8_t wiper_i = 0);                // Increment the specified wiper.
+        void decrement(uint8_t wiper_i = 0);                // Decrement the specified wiper.
 
     private:
 

@@ -33,8 +33,8 @@ uint8_t Vulintus_MCP40D1x_DigiPot::begin(void)
 }
 
 
-// Write the Wiper 0 value, scaled 0-1 (Vulintus_DigiPot base class function).
-float Vulintus_MCP40D1x_DigiPot::set_scaled(float float_scaled)
+// Write the specified wiper value, scaled 0-1 (Vulintus_DigiPot base class function).
+float Vulintus_MCP40D1x_DigiPot::set_scaled(float float_scaled, uint8_t wiper_i)
 {
     float_scaled *= (float) n_resistors;    // Calculate the fractional number of steps.
     uint16_t uint_val = float_scaled;       // Convert the float to a uint16.
@@ -44,40 +44,16 @@ float Vulintus_MCP40D1x_DigiPot::set_scaled(float float_scaled)
 }
 
 
-// Write the specified wiper value, scaled 0-1 (Vulintus_DigiPot base class function).
-float Vulintus_MCP40D1x_DigiPot::set_scaled(float float_val, uint8_t wiper_i)
-{
-    float_val = set_scaled(float_val);     // Write the value, ignoring the wiper index.
-    return float_val;                      // Return the actual scaled value.
-}
-
-
-// Read the Wiper 0 value, scaled 0-1 (Vulintus_DigiPot base class function).
-float Vulintus_MCP40D1x_DigiPot::get_scaled(void)
+// Read the specified wiper value, scaled 0-1 (Vulintus_DigiPot base class function).
+float Vulintus_MCP40D1x_DigiPot::get_scaled(uint8_t wiper_i)
 {
     float float_val = read();                           // Read the wiper value, ignoring the wiper index.
     float_val /= (float) n_resistors;                   // Convert the step setting to fractional 0-1.
     float_val *= max_resistance;                        // Convert the scaled value to resistance (ohms).
     float_val += wiper_resistance;                      // Add the wiper resistance.
     float_val /= (wiper_resistance + max_resistance);   // Divide by the wiper resistance and max resistance to get the actual scaled value.
-    return float_val;                                   // Read the scaled value.
-}                        
-
-
-// Read the specified wiper value, scaled 0-1 (Vulintus_DigiPot base class function).
-float Vulintus_MCP40D1x_DigiPot::get_scaled(uint8_t wiper_i)
-{
-    float float_val = get_scaled();         // Read the scaled value, ignoring the wiper index.
-    return float_val;                       // Return the scaled float value.
-}      		    
-
-
-// Write the Wiper 0 value, in real resistance (ohms).
-float Vulintus_MCP40D1x_DigiPot::set_resistance(float float_val)
-{
-    float_val = set_resistance(float_val, (uint8_t) 0);     // Set the resistance (ohms) on wiper 0.
-    return float_val;                                       // Return the float value.
-}					
+    return float_val;                                   // Return the scaled float value.
+}      		    		
 
 
 // Write the specified wiper value, in real resistance (ohms).
@@ -95,13 +71,6 @@ float Vulintus_MCP40D1x_DigiPot::set_resistance(float float_val, uint8_t wiper_i
     float_val += wiper_resistance;                  // Add the wiper resistance.
     return float_val;                               // Return the float value.
 }	
-
-
-// Read the Wiper 0 value, in real resistance (ohms).
-float Vulintus_MCP40D1x_DigiPot::get_resistance(void)
-{
-    float float_val = get_resistance((uint8_t) 0);      // Fetch the resistance from wiper 0.
-}    			
 
 
 // Read the specified wiper value, in real resistance (ohms).

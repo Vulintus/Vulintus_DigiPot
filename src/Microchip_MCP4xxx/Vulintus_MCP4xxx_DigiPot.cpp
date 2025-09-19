@@ -49,14 +49,6 @@ uint8_t Vulintus_MCP4xxx_DigiPot::begin(void)
 }
 
 
-// Write the Wiper 0 value, scaled 0-1 (Vulintus_DigiPot base class function).
-float Vulintus_MCP4xxx_DigiPot::set_scaled(float float_scaled)
-{
-    float_scaled = set_scaled(float_scaled, (uint8_t) 0);   // Write the value to wiper 0.
-    return float_scaled;                                   // Return the actual scaled value.
-}
-
-
 // Write the specified wiper value, scaled 0-1 (Vulintus_DigiPot base class function).
 float Vulintus_MCP4xxx_DigiPot::set_scaled(float float_scaled, uint8_t wiper_i)
 {    
@@ -66,15 +58,7 @@ float Vulintus_MCP4xxx_DigiPot::set_scaled(float float_scaled, uint8_t wiper_i)
     float_scaled = get_scaled(wiper_i);     // Read the actual scaled value.
     return float_scaled;                    // Return the actual scaled value.
 }
-
-
-// Read the Wiper 0 value, scaled 0-1 (Vulintus_DigiPot base class function).
-float Vulintus_MCP4xxx_DigiPot::get_scaled(void)
-{
-    float float_scaled = get_scaled((uint8_t) 0);   // Read the value from wiper 0.    
-    return float_scaled;                            // Return the float value.
-}                        
-
+                 
 
 // Read the specified wiper value, scaled 0-1 (Vulintus_DigiPot base class function).
 float Vulintus_MCP4xxx_DigiPot::get_scaled(uint8_t wiper_i)
@@ -85,15 +69,7 @@ float Vulintus_MCP4xxx_DigiPot::get_scaled(uint8_t wiper_i)
     float_scaled += wiper_resistance;                       // Add the wiper resistance.
     float_scaled /= (wiper_resistance + max_resistance);    // Divide by the wiper resistance and max resistance to get the actual scaled value.
     return float_scaled;                                    // Read the value from wiper 0.
-}      		    
-
-
-// Write the Wiper 0 value, in real resistance (ohms).
-float Vulintus_MCP4xxx_DigiPot::set_resistance(float float_ohms)
-{
-    float_ohms = set_resistance(float_ohms, (uint8_t) 0);   // Set the resistance (ohms) on wiper 0.
-    return float_ohms;                                      // Return the float value.
-}					
+}      		    	
 
 
 // Write the specified wiper value, in real resistance (ohms).
@@ -110,14 +86,7 @@ float Vulintus_MCP4xxx_DigiPot::set_resistance(float float_ohms, uint8_t wiper_i
     float_ohms *= max_resistance;                   // Convert the scaled value to resistance (ohms).
     float_ohms += wiper_resistance;                 // Add the wiper resistance.
     return float_ohms;                              // Return the float value.
-}	
-
-
-// Read the Wiper 0 value, in real resistance (ohms).
-float Vulintus_MCP4xxx_DigiPot::get_resistance(void)
-{
-    float float_ohms = get_resistance((uint8_t) 0);     // Fetch the resistance from wiper 0.
-}    			
+}			
 
 
 // Read the specified wiper value, in real resistance (ohms).
@@ -126,14 +95,7 @@ float Vulintus_MCP4xxx_DigiPot::get_resistance(uint8_t wiper_i)
     float float_ohms = get_scaled(wiper_i);             // Read the scaled value of the wiper, 0-1.
     float_ohms *= (max_resistance + wiper_resistance);  // Convert the scaled value to resistance (ohms).
     return float_ohms;                                  // Return the float value.
-}		
-
-
-// Read the Wiper 0 value.
-uint16_t Vulintus_MCP4xxx_DigiPot::read(void)
-{
-    return read((uint8_t) 0);   // Read the value from wiper 0.
-}                         
+}		           
 
 
 // Read the specified wiper value.
@@ -148,13 +110,6 @@ uint16_t Vulintus_MCP4xxx_DigiPot::read(uint8_t wiper_i)
 }          
 
 
-// Write the Wiper 0 value.
-void Vulintus_MCP4xxx_DigiPot::write(uint16_t value)
-{
-    write(value, (uint8_t) 0);          // Write the value to wiper 0.
-}     
-
-
 // Write the specified wiper value.
 void Vulintus_MCP4xxx_DigiPot::write(uint16_t value, uint8_t wiper_i)
 {
@@ -167,13 +122,6 @@ void Vulintus_MCP4xxx_DigiPot::write(uint16_t value, uint8_t wiper_i)
 }   
 
 
-// Increment Wiper 0.MCP4XXX
-void Vulintus_MCP4xxx_DigiPot::increment()
-{
-    increment((uint8_t) 0);             // Increment wiper 0.
-}           
-
-
 // Increment the specified wiper.
 void Vulintus_MCP4xxx_DigiPot::increment(uint8_t wiper_i)
 {
@@ -183,14 +131,7 @@ void Vulintus_MCP4xxx_DigiPot::increment(uint8_t wiper_i)
     else {
         send_cmd(MCP4XXX_REG_WIPER1, MCP4XXX_CMD_INCR);
     }
-}            
-
-
-// Decrement Wiper 1.
-void Vulintus_MCP4xxx_DigiPot::decrement()
-{
-    decrement((uint8_t) 0);             // Decrement wiper 0.
-}                         
+}                           
 
 
 // Decrement the specified wiper.

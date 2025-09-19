@@ -16,7 +16,7 @@
 
 
 // Class constructor.
-Vulintus_AD5273_DigiPot::Vulintus_AD5273_DigiPot(AD5273_I2C_addr addr, TwoWire *i2c_bus)
+Vulintus_AD5273_DigiPot::Vulintus_AD5273_DigiPot(uint8_t addr, TwoWire *i2c_bus)
     : _i2c_addr(addr)
 {
     _i2c_bus = &Wire;       // Set the I2C bus to the default.
