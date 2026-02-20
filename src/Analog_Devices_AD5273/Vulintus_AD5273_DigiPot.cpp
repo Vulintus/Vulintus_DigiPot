@@ -102,6 +102,7 @@ float Vulintus_AD5273_DigiPot::set_resistance(float float_val, uint8_t wiper_i)
 float Vulintus_AD5273_DigiPot::get_resistance(void)
 {
     float float_val = get_resistance((uint8_t) 0);      // Fetch the resistance from wiper 0.
+    return float_val;                                   // Return the float value.
 }    			
 
 
