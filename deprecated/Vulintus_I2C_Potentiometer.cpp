@@ -75,6 +75,7 @@ uint8_t Vulintus_I2C_Potentiometer::read(uint16_t *pot_val)
 		serial_reply = Wire.read() + (serial_reply << 8);	//Read the next byte from the I2C buffer.
 	}
 	*pot_val = serial_reply;									//Copy the serial reply to the input pointer.
+	return 0; 															//Return an error.
 }
 
 
